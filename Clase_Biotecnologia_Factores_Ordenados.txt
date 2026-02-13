@@ -1,0 +1,112 @@
+CLASE DE BIOINFORMATICA / BIOTECNOLOGIA
+
+Factores ordenados y direccionalidad (bajo, medio, alto)
+
+===============================
+
+1. CREACION DE VECTORES
+
+===============================
+
+set.seed(321)
+
+ID de cultivo
+
+cultivo <- paste0(“C”, 1:45)
+
+Tipo de bacteria
+
+bacteria <- rep(c(“E_coli”, “S_aureus”, “B_subtilis”), each = 15)
+
+Concentración de nanopartículas (variable ordinal)
+
+concentracion <- rep(rep(c(“Bajo”, “Medio”, “Alto”), each = 5), times =
+3)
+
+Temperatura de incubación
+
+temperatura <- rep(c(30, 37, 42), times = 15)
+
+Crecimiento bacteriano simulado (UFC/ml)
+
+crecimiento <- c( rnorm(15, mean = 8, sd = 1), rnorm(15, mean = 5, sd =
+1), rnorm(15, mean = 3, sd = 0.8) )
+
+===============================
+
+2. CREAR DATA FRAME
+
+===============================
+
+datos_bio <- data.frame( cultivo, bacteria, concentracion, temperatura,
+crecimiento )
+
+head(datos_bio)
+
+===============================
+
+3. CONVERTIR A FACTORES
+
+===============================
+
+Factor nominal
+
+datos_biobacteria <  − as.factor(datos_(b)iobacteria)
+
+Factor ordinal con direccionalidad
+
+datos_bioconcentracion <  − factor(datos_(b)ioconcentracion, levels =
+c(“Bajo”, “Medio”, “Alto”), ordered = TRUE )
+
+===============================
+
+4. VERIFICAR ESTRUCTURA
+
+===============================
+
+str(datos_bio)
+
+===============================
+
+5. CARGAR LIBRERIA
+
+===============================
+
+library(ggplot2)
+
+===============================
+
+6. GRAFICAS
+
+===============================
+
+Boxplot mostrando efecto de concentración (factor ordenado)
+
+ggplot(datos_bio, aes(x = concentracion, y = crecimiento, fill =
+concentracion)) + geom_boxplot() + theme_minimal() + labs( title =
+“Efecto de la concentración sobre el crecimiento bacteriano”, x =
+“Concentración (ordenada)”, y = “Crecimiento (UFC/ml)” )
+
+Interacción bacteria × concentración
+
+ggplot(datos_bio, aes(x = concentracion, y = crecimiento, fill =
+bacteria)) + geom_boxplot() + facet_wrap(~ bacteria) + theme_classic()
+
+===============================
+
+7. ANALISIS OPCIONAL
+
+===============================
+
+Comparación con modelo lineal considerando factor ordinal
+
+modelo <- lm(crecimiento ~ concentracion + bacteria, data = datos_bio)
+summary(modelo)
+
+PREGUNTAS PARA LOS ESTUDIANTES:
+
+1. ¿Qué pasa si NO usamos ordered = TRUE?
+
+2. ¿Cómo cambia el modelo si cambiamos el orden?
+
+3. ¿La concentración parece tener efecto lineal?

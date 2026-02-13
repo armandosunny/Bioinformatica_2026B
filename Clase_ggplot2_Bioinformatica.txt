@@ -1,0 +1,103 @@
+CLASE DE BIOINFORMATICA
+
+Creación de base de datos y gráficas con ggplot2
+
+===============================
+
+1. CREACION DE VECTORES
+
+===============================
+
+set.seed(123) # para reproducibilidad
+
+ID de muestra
+
+muestra <- paste0(“M”, 1:36)
+
+Tratamiento
+
+tratamiento <- rep(c(“Control”, “Antibiotico”, “Estres”), each = 12)
+
+Tejido
+
+tejido <- rep(rep(c(“Higado”, “Cerebro”, “Musculo”), each = 4), times =
+3)
+
+Sexo
+
+sexo <- rep(c(“Macho”, “Hembra”), times = 18)
+
+Expresión génica simulada
+
+expresion <- c( rnorm(12, mean = 5, sd = 1), rnorm(12, mean = 8, sd =
+1.5), rnorm(12, mean = 3, sd = 0.8) )
+
+===============================
+
+2. CREAR DATA FRAME
+
+===============================
+
+datos <- data.frame( muestra, tratamiento, tejido, sexo, expresion )
+
+head(datos)
+
+===============================
+
+3. CONVERTIR A FACTOR
+
+===============================
+
+datostratamiento <  − as.factor(datostratamiento)
+datostejido <  − as.factor(datostejido)
+datossexo <  − as.factor(datossexo)
+
+Definir niveles manualmente (opcional)
+
+datostratamiento <  − factor(datostratamiento, levels = c(“Control”,
+“Antibiotico”, “Estres”))
+
+===============================
+
+4. CARGAR LIBRERIA
+
+===============================
+
+library(ggplot2)
+
+===============================
+
+5. GRAFICAS
+
+===============================
+
+Boxplot por tratamiento
+
+ggplot(datos, aes(x = tratamiento, y = expresion, fill = tratamiento)) +
+geom_boxplot() + theme_minimal() + labs( title = “Expresión génica por
+tratamiento”, x = “Tratamiento”, y = “Nivel de expresión” )
+
+Boxplot por tejido
+
+ggplot(datos, aes(x = tejido, y = expresion, fill = tejido)) +
+geom_boxplot() + theme_classic()
+
+Interacción tratamiento × tejido
+
+ggplot(datos, aes(x = tratamiento, y = expresion, fill = tejido)) +
+geom_boxplot() + facet_wrap(~ tejido) + theme_minimal()
+
+Scatterplot con color por sexo
+
+ggplot(datos, aes(x = tratamiento, y = expresion, color = sexo)) +
+geom_jitter(width = 0.2, size = 3) + theme_bw()
+
+===============================
+
+6. GRAFICA DE BARRAS CON ERROR ESTANDAR
+
+===============================
+
+ggplot(datos, aes(x = tratamiento, y = expresion)) + stat_summary(fun =
+mean, geom = “bar”, fill = “steelblue”) + stat_summary(fun.data =
+mean_se, geom = “errorbar”, width = 0.2)
