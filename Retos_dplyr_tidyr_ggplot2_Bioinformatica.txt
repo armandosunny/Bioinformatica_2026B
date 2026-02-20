@@ -1,0 +1,67 @@
+CLASE DE BIOINFORMÁTICA Práctica con dplyr, tidyr y ggplot2
+==========================================
+
+BASE DE DATOS: Expresión génica (10,000 filas)
+
+NIVEL 1 – Manipulación básica con dplyr
+
+Reto 1: ¿Cuál es el promedio de expresión por tratamiento?
+
+Reto 2: Filtrar solo: - Tejido = Higado - Estrés = Alto - Tiempo = 48h
+Ordenar por mayor expresión.
+
+Reto 3: ¿Cuáles son los 10 genes más expresados en condiciones de
+CRISPR?
+
+NIVEL 2 – Resúmenes complejos
+
+Reto 4: Calcular media y desviación estándar por Gene y Tratamiento.
+
+Reto 5: ¿Cuál tratamiento aumenta más la expresión bajo estrés alto?
+
+Reto 6: Calcular fold change promedio respecto a Control.
+
+NIVEL 3 – tidyr
+
+Reto 7: Crear tabla ancha donde: Filas = Gene Columnas = Tratamiento
+Valores = promedio de expresión.
+
+Reto 8: Regresar la tabla anterior a formato largo.
+
+Reto 9: Separar la variable Sample_ID en Tejido, Tiempo y Replica.
+
+NIVEL 4 – Análisis avanzado
+
+Reto 10: Identificar genes con: - Expresión media > 15 TPM - Bajo estrés
+alto - En al menos 2 tejidos
+
+Reto 11: ¿Cuál combinación Tratamiento–Tejido produce mayor varianza?
+
+Reto 12: Generar tabla con: - Media por Gene - Media global - Diferencia
+respecto a la media global
+
+NIVEL 5 – Visualización con ggplot2
+
+Reto 13: Graficar la distribución de expresión (histograma) general.
+
+Reto 14: Hacer boxplot de expresión por Tratamiento.
+
+Reto 15: Hacer boxplot de expresión por Estrés, coloreado por
+Tratamiento.
+
+Reto 16: Graficar media de expresión por Tratamiento (usar datos
+resumidos).
+
+Reto 17: Seleccionar los 10 genes más expresados y hacer un gráfico de
+barras.
+
+Reto 18: Hacer un gráfico de interacción: Eje X = Tiempo Eje Y =
+expresión promedio Color = Tratamiento
+
+Reto 19: Hacer un heatmap simple (usando geom_tile) con: Filas = Gene
+Columnas = Tratamiento Valores = media de expresión
+
+RETO FINAL: Construir un pipeline que: 1. Elimine NA 2. Calcule promedio
+por Gene y Tratamiento 3. Obtenga fold change vs Control 4. Seleccione
+genes con FC > 2 5. Ordene de mayor a menor 6. Genere una gráfica final
+con los genes seleccionados

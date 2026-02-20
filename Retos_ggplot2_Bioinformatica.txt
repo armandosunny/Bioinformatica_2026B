@@ -1,0 +1,81 @@
+CLASE DE BIOINFORMÁTICA Práctica de Visualización con ggplot2
+==========================================
+
+BASE DE DATOS: Expresión génica (10,000 filas)
+
+Objetivo: Practicar visualización de datos biológicos usando ggplot2.
+
+  ------------------------------
+  NIVEL 1 – Exploración básica
+  ------------------------------
+
+Reto 1: Graficar un histograma de la variable Expresion_TPM.
+
+Reto 2: Hacer un boxplot de expresión por Tratamiento.
+
+Reto 3: Hacer un boxplot de expresión por Estrés.
+
+Reto 4: Hacer un gráfico de dispersión (scatter plot): Eje X = Replica
+Eje Y = Expresion_TPM
+
+  ------------------------------------
+  NIVEL 2 – Comparaciones biológicas
+  ------------------------------------
+
+Reto 5: Boxplot de expresión por Tratamiento, coloreado por Estrés.
+
+Reto 6: Gráfico de violín (violin plot) por Tratamiento.
+
+Reto 7: Graficar media de expresión por Tratamiento (usando datos
+resumidos con dplyr).
+
+Reto 8: Graficar media de expresión por Tiempo y Tratamiento (usando
+geom_line).
+
+  -----------------------------
+  NIVEL 3 – Genes específicos
+  -----------------------------
+
+Reto 9: Seleccionar los 10 genes más expresados y hacer un gráfico de
+barras.
+
+Reto 10: Seleccionar un solo gen y graficar su expresión por Tratamiento
+y Tiempo.
+
+Reto 11: Hacer un gráfico de interacción: Eje X = Tiempo Eje Y =
+expresión promedio Color = Tratamiento
+
+  -------------------
+  NIVEL 4 – Heatmap
+  -------------------
+
+Reto 12: Crear tabla resumen con: Filas = Gene Columnas = Tratamiento
+Valores = media de expresión.
+
+Reto 13: Construir un heatmap usando geom_tile() para visualizar esa
+matriz.
+
+Reto 14: Modificar el heatmap agregando: - Escala de color continua -
+Rotación de etiquetas del eje X
+
+  ------------------------------------
+  NIVEL 5 – Personalización avanzada
+  ------------------------------------
+
+Reto 15: Modificar tema del gráfico usando theme_minimal().
+
+Reto 16: Agregar títulos, subtítulos y etiquetas claras.
+
+Reto 17: Usar facet_wrap() para separar por Tejido.
+
+Reto 18: Cambiar escalas (por ejemplo usar escala log10 en el eje Y).
+
+Reto 19: Exportar una figura en formato pdf con ggsave().
+
+  ------------
+  RETO FINAL
+  ------------
+
+Construir una figura lista para publicación que incluya: - Datos
+resumidos - Comparación entre tratamientos - Título informativo -
+Leyenda clara - Tema limpio
