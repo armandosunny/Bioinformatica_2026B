@@ -1,0 +1,39 @@
+# Con conda (recomendado)
+conda install -c bioconda sra-tools
+
+# Verificar
+fasterq-dump --version
+
+
+# Crear carpeta de trabajo
+mkdir ecoli_reads && cd ecoli_reads
+
+# Descargar en formato FASTQ separado por pares
+fasterq-dump SRR2584863 --split-files --threads 4
+
+
+SRR2584863_1.fastq   # Forward (R1)
+SRR2584863_2.fastq   # Reverse (R2)
+
+
+
+gzip SRR2584863_1.fastq
+gzip SRR2584863_2.fastq
+
+
+fastqc SRR2584863_1.fastq.gz SRR2584863_2.fastq.gz
+
+trimmomatic PE \
+  SRR2584863_1.fastq.gz SRR2584863_2.fastq.gz \
+  R1_paired.fastq.gz R1_unpaired.fastq.gz \
+  R2_paired.fastq.gz R2_unpaired.fastq.gz \
+  SLIDINGWINDOW:4:20 MINLEN:50
+
+
+spades.py \
+  -1 R1_paired.fastq.gz \
+  -2 R2_paired.fastq.gz \
+  -o ensamblado_ecoli
+
+
+
