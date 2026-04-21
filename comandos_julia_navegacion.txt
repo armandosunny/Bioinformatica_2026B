@@ -1,0 +1,43 @@
+COMANDOS BÁSICOS DE NAVEGACIÓN EN JULIA
+
+1. Ver archivos (equivalente a ls)
+readdir()
+readdir("ruta/")
+readdir(; join=true)
+
+2. Cambiar de directorio (cd)
+cd("ruta/")
+cd("..")   # subir un nivel
+cd("~")    # ir al home
+cd("Desktop")  # ir al escritorio (macOS)
+
+3. Ver directorio actual (pwd)
+pwd()
+
+4. Crear directorios
+mkdir("nueva_carpeta")
+mkpath("carpeta1/carpeta2/carpeta3")
+
+5. Eliminar archivos o carpetas
+rm("archivo.txt")
+rm("carpeta"; recursive=true)
+
+6. Verificar existencia
+isfile("archivo.txt")
+isdir("carpeta")
+
+7. Información de archivos
+stat("archivo.txt")
+
+8. Ejecutar comandos del sistema (tipo Bash)
+run(`ls`)
+run(`pwd`)
+run(`ls -lh`)
+
+EJEMPLO DE FLUJO
+
+println(pwd())
+cd("Desktop")
+archivos = readdir()
+println(archivos)
+mkdir("resultados")

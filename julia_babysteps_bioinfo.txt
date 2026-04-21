@@ -1,0 +1,212 @@
+Parte 1. Primeros comandos
+
+1. Abrir Julia y escribir esto
+
+println("Hola, Julia")
+
+Qué significa
+- println = imprimir en pantalla
+- " " = texto
+- () = lo que le pasas a la función
+
+2. Variables
+
+x = 5
+y = 3
+x + y
+
+Qué significa
+- = asigna un valor
+- x y y son variables
+- + suma
+
+3. Texto
+
+nombre = "Armando"
+println(nombre)
+
+Qué significa
+- una secuencia biológica también se puede guardar como texto
+
+--------------------------------------------------
+
+Parte 2. Guardar una secuencia
+
+4. Crear una secuencia manualmente
+
+seq = "ATGCGTACGTTAGC"
+println(seq)
+
+Explicación
+- seq guarda una cadena de ADN
+- es un String
+
+5. Longitud de la secuencia
+
+length(seq)
+
+Qué significa
+- cuenta caracteres
+
+--------------------------------------------------
+
+Parte 3. Acceder a partes
+
+6. Fragmento
+
+seq[1:3]
+
+Significa
+- [] extrae partes
+- 1:3 es rango
+
+7. Otro fragmento
+
+seq[4:6]
+
+--------------------------------------------------
+
+Parte 4. Contar bases
+
+8. Contar A
+
+count(c -> c == 'A', seq)
+
+Explicación
+- count cuenta
+- c -> función
+- == comparar
+
+Contar otras
+
+count(c -> c == 'G', seq)
+count(c -> c == 'C', seq)
+
+--------------------------------------------------
+
+Parte 5. GC content
+
+9. Paso a paso
+
+g = count(c -> c == 'G', seq)
+c = count(c -> c == 'C', seq)
+gc = g + c
+largo = length(seq)
+gc / largo
+
+Compacto
+
+gc = count(c -> c == 'G' || c == 'C', seq)
+gc / length(seq)
+
+|| significa "o"
+
+--------------------------------------------------
+
+Parte 6. Motivos
+
+10. Buscar ATG
+
+occursin("ATG", seq)
+
+Significa
+- busca patrón
+- devuelve true/false
+
+11. Buscar TAG
+
+occursin("TAG", seq)
+
+--------------------------------------------------
+
+Parte 7. Simular secuencia
+
+12. Secuencia aleatoria
+
+using Random
+
+bases = ['A', 'T', 'G', 'C']
+seq_random = join(rand(bases, 20))
+println(seq_random)
+
+Explicación
+- rand elige aleatorio
+- join une
+
+13. Longitud
+
+length(seq_random)
+
+14. GC
+
+gc_random = count(c -> c == 'G' || c == 'C', seq_random)
+gc_random / length(seq_random)
+
+--------------------------------------------------
+
+Parte 8. Comparar secuencias
+
+15. Nueva secuencia
+
+seq2 = join(rand(bases, 20))
+println(seq2)
+
+16. Comparar
+
+seq_random == seq2
+
+17. Diferencias
+
+sum(seq_random[i] != seq2[i] for i in 1:length(seq_random))
+
+--------------------------------------------------
+
+Parte 9. Leer archivo
+
+seq = read("seq.txt")
+println(seq)
+length(seq)
+
+--------------------------------------------------
+
+Parte 10. Loop
+
+for base in seq
+    println(base)
+end
+
+--------------------------------------------------
+
+Parte 11. Función
+
+function gc_content(seq)
+    gc = count(c -> c == 'G' || c == 'C', seq)
+    return gc / length(seq)
+end
+
+gc_content(seq)
+
+--------------------------------------------------
+
+Ejercicios
+
+1. Crear secuencia y longitud
+
+seq3 = "ATGATGATTTGC"
+length(seq3)
+
+2. Contar A
+
+count(c -> c == 'A', seq3)
+
+3. Buscar ATG
+
+occursin("ATG", seq3)
+
+4. GC
+
+gc_content(seq3)
+
+5. Simular secuencia
+
+join(rand(bases, 30))

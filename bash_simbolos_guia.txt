@@ -1,0 +1,171 @@
+PARTE 1 — LOS SÍMBOLOS MÁS IMPORTANTES
+
+
+“Bash no son comandos sueltos. Es un lenguaje con símbolos que tienen significado.”
+
+1. Comillas ' ' vs " "
+
+' ' (comillas simples)
+awk '/^>/ {print $0}'
+Significa:
+- literal exacto
+- bash NO interpreta nada dentro
+
+" " (comillas dobles)
+echo "Hola $USER"
+Significa:
+- sí interpreta variables
+
+2. / / → patrones (regex)
+
+Ejemplo:
+/^>/
+
+Significa:
+- buscar patrón
+
+Símbolos:
+^  → inicio de línea
+$  → final de línea
+.  → cualquier carácter
+*  → repetir
+|  → OR
+
+3. { } → bloque de acciones
+
+awk '{print $1}'
+
+Significa:
+- todo dentro se ejecuta
+
+4. $ → variables
+
+$0 → toda la línea
+$1 → columna 1
+$2 → columna 2
+
+5. = → asignación
+
+seq=""
+Significa:
+- guardar valor
+
+6. "" → cadena vacía
+
+seq=""
+Significa:
+- reiniciar variable
+
+7. ; → separador
+
+a=1; b=2
+
+8. | → pipe
+
+comando1 | comando2
+
+Significa:
+- salida → entrada
+
+9. > → redirección
+
+comando > archivo.txt
+
+10. >> → append
+
+comando >> archivo.txt
+
+11. < → entrada
+
+tr -cd 'A-Z' < archivo.txt
+
+12. - → opciones
+
+sort -n
+
+13. -v → invertir
+
+grep -v "^>"
+
+14. \ → continuar línea
+
+comando1 | \
+comando2
+
+15. () → agrupar
+
+16. BEGIN y END (awk)
+
+awk 'BEGIN{...} ... END{...}'
+
+--------------------------------------------------
+
+PARTE 2 — DESARMAR COMANDO
+
+awk '/^>/ {if(seq){print length(seq)}; seq=""; next} {seq=seq$0} END{print length(seq)}'
+
+Partes:
+ /^>/ → línea empieza con >
+ {} → bloque
+ if(seq) → si variable tiene valor
+ length(seq) → longitud
+ seq="" → reiniciar
+ next → saltar
+ $0 → línea completa
+ seq=seq$0 → concatenar
+ END → final
+
+Traducción:
+“Cuando hay un header, imprime la secuencia anterior y reinicia; si no, acumula; al final imprime la última.”
+
+--------------------------------------------------
+
+PARTE 3 — PIPELINES
+
+grep -v "^>" ecoli.fasta | tr -d '\n' | fold -w1 | sort | uniq -c
+
+Significado:
+grep -v "^>" → quitar headers
+tr -d '\n' → quitar saltos
+fold -w1 → separar letras
+sort → ordenar
+uniq -c → contar
+
+Traducción:
+“Separa aminoácidos y cuenta cuántos hay de cada uno”
+
+--------------------------------------------------
+
+PARTE 4 — EJERCICIOS
+
+cut -d "|" -f2
+- -d → delimitador
+- "|" → separador
+- -f2 → campo 2
+
+sort -k2 -nr
+- -k2 → columna 2
+- -n → numérico
+- -r → reversa
+
+awk '$2 > 300'
+- $2 → columna
+- > → comparación
+
+--------------------------------------------------
+
+PARTE 5 — INTERPRETACIÓN
+
+grep "^>" ecoli.fasta | wc -l
+→ contar proteínas
+
+paste ids.txt lengths.txt | sort -k2 -nr | head
+→ top proteínas largas
+
+tr -cd 'A-Z\n'
+→ dejar solo letras
+
+--------------------------------------------------
+
+
+“Si entiendes los símbolos, puedes entender cualquier comando aunque nunca lo hayas visto.”

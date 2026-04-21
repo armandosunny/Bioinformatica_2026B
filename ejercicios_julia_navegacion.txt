@@ -1,0 +1,104 @@
+EJERCICIOS DE NAVEGACIÓN EN JULIA (NIVEL CLASE)
+
+========================================
+PARTE 1. EJERCICIOS BÁSICOS
+========================================
+
+1. Ver tu directorio actual
+- Usa pwd() para saber en qué carpeta estás.
+
+2. Listar archivos
+- Usa readdir() para ver todos los archivos de tu carpeta actual.
+
+3. Ir al escritorio
+- Usa cd("Desktop")
+- Verifica con pwd()
+
+4. Volver al home
+- Usa cd("~")
+
+5. Subir un nivel
+- Usa cd("..")
+
+========================================
+PARTE 2. MANEJO DE CARPETAS
+========================================
+
+6. Crear una carpeta
+- mkdir("clase_julia")
+
+7. Entrar a la carpeta
+- cd("clase_julia")
+
+8. Crear subcarpetas
+- mkpath("datos/secuencias")
+
+9. Ver estructura
+- readdir()
+- readdir("datos")
+
+========================================
+PARTE 3. ARCHIVOS
+========================================
+
+10. Crear un archivo vacío (simulación)
+- Puedes usar:
+  open("archivo.txt", "w") do f
+      write(f, "Hola Julia")
+  end
+
+11. Verificar si existe
+- isfile("archivo.txt")
+
+12. Obtener información
+- stat("archivo.txt")
+
+========================================
+PARTE 4. ELIMINAR
+========================================
+
+13. Borrar archivo
+- rm("archivo.txt")
+
+14. Borrar carpeta con contenido
+- rm("datos"; recursive=true)
+
+========================================
+PARTE 5. COMANDOS TIPO BASH
+========================================
+
+15. Ejecutar ls desde Julia
+- run(`ls`)
+
+16. Ejecutar pwd desde Julia
+- run(`pwd`)
+
+========================================
+PARTE 6. MINI RETO (BIOINFORMÁTICA)
+========================================
+
+Objetivo: Simular estructura de proyecto
+
+1. Crear carpeta proyecto
+2. Dentro crear:
+   - datos
+   - resultados
+   - scripts
+
+3. Dentro de datos crear:
+   - secuencias.fasta
+   (puedes escribir texto simple simulando secuencias)
+
+4. Verifica toda la estructura con readdir()
+
+========================================
+PARTE 7. RETO FINAL
+========================================
+
+- Navega entre carpetas
+- Crea y elimina archivos
+- Ejecuta comandos del sistema
+
+Objetivo:
+Que puedas moverte en Julia como si fuera Bash
+

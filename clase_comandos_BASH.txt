@@ -1,0 +1,197 @@
+
+
+
+#proteinasDataset (ejemplo)
+
+
+wget "https://rest.uniprot.org/uniprotkb/stream?compressed=false&format=fasta&query=organism_id:562" -O ecoli.fasta
+
+
+#1. Longitud de cada proteína (awk)
+
+awk '/^>/ {if(seq){print length(seq)}; seq=""; next} {seq=seq$0} END{print length(seq)}' ecoli.fasta
+
+
+
+#2. Estadísticas básicas (awk)
+
+
+awk '/^>/ {if(seq){print length(seq)}; seq=""; next} {seq=seq$0} END{print length(seq)}' ecoli.fasta | \
+awk '{sum+=$1; count+=1} END{print "Promedio:", sum/count}'
+
+
+
+#3. Ordenar proteínas por tamaño (sort)
+
+awk '/^>/ {if(seq){print length(seq)}; seq=""; next} {seq=seq$0} END{print length(seq)}' ecoli.fasta | sort -n | tail
+
+
+
+#4. Distribución de tamaños (sort + uniq)
+
+awk '/^>/ {if(seq){print int(length(seq)/50)*50}; seq=""; next} {seq=seq$0} END{print int(length(seq)/50)*50}' ecoli.fasta | sort | uniq -c
+
+
+#5. Contar aminoácidos específicos (tr + sort + uniq)
+
+grep -v "^>" ecoli.fasta | tr -d '\n' | fold -w1 | sort | uniq -c
+
+
+#6. Porcentaje de aminoácidos
+
+grep -v "^>" ecoli.fasta | tr -d '\n' | fold -w1 | wc -l
+
+
+#7. Extraer IDs (cut)
+grep "^>" ecoli.fasta | cut -d "|" -f2 | head
+
+
+#8. Crear tabla ID vs longitud (awk + paste)
+
+# IDs
+grep "^>" ecoli.fasta | cut -d "|" -f2 > ids.txt
+
+# longitudes
+awk '/^>/ {if(seq){print length(seq)}; seq=""; next} {seq=seq$0} END{print length(seq)}' ecoli.fasta > lengths.txt
+
+# unir
+paste ids.txt lengths.txt | head
+
+
+#9. Ordenar por longitud (sort)
+paste ids.txt lengths.txt | sort -k2 -n | tail
+
+
+#10. Filtrar proteínas largas (awk)
+
+paste ids.txt lengths.txt | awk '$2 > 300'
+
+
+#“¿Cuál es la proteína más larga?”
+
+paste ids.txt lengths.txt | sort -k2 -n | tail -1
+
+#¿Cuántas proteínas miden más de 200 aa?”
+paste ids.txt lengths.txt | awk '$2 > 200' | wc -l
+
+
+
+#¿Cuál es el aminoácido más abundante?
+
+grep -v "^>" ecoli.fasta | tr -d '\n' | fold -w1 | sort | uniq -c | sort -nr | head
+
+
+#¿Hay muchas proteínas cortas (<100 aa)?
+
+paste ids.txt lengths.txt | awk '$2 < 100' | wc -l
+
+
+
+#Quitar el símbolo > de los headers
+
+sed 's/^>//' ecoli.fasta | head
+
+#Convertir a mayúsculas/minúsculas
+grep -v "^>" ecoli.fasta | tr 'A-Z' 'a-z' | head
+
+
+#Limpiar encabezados
+
+grep "^>" ecoli.fasta | sed 's/ .*//' | head
+
+
+#Ver primeras y últimas proteínas
+head -20 ecoli.fasta
+tail -20 ecoli.fasta
+
+
+#Navegación interactiva
+
+less ecoli.fasta
+
+
+#Número de líneas, palabras y caracteres
+
+wc ecoli.fasta
+
+
+#Solo número de secuencias
+
+grep "^>" ecoli.fasta | wc -l
+
+
+#Ordenar descendente
+paste ids.txt lengths.txt | sort -k2 -nr | head
+
+#Top 10 proteínas más largas
+paste ids.txt lengths.txt | sort -k2 -nr | head -10
+
+
+#Contar duplicados (IDs repetidos, si hubiera)
+grep "^>" ecoli.fasta | sort | uniq -c | sort -nr | head
+
+#Extraer nombre de proteína (campo descripción)
+
+grep "^>" ecoli.fasta | cut -d " " -f2- | head
+
+#Crear tabla con ranking
+paste ids.txt lengths.txt | sort -k2 -nr | nl | head
+
+#Encontrar la proteína más larga SIN sort
+paste ids.txt lengths.txt | awk 'BEGIN{max=0} $2>max {max=$2; id=$1} END{print id, max}'
+
+
+#Promedio + máximo + mínimo
+
+paste ids.txt lengths.txt | awk '
+BEGIN{min=100000; max=0}
+{
+sum+=$2
+if($2>max){max=$2}
+if($2<min){min=$2}
+}
+END{
+print "Promedio:", sum/NR
+print "Max:", max
+print "Min:", min
+}'
+
+
+#Eliminar caracteres raros
+
+tr -cd 'A-Z\n' < ecoli.fasta | head
+
+
+#Aplicar comando a múltiples archivos
+
+
+ls *.fasta | xargs -I {} grep "^>" {} | wc -l
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
